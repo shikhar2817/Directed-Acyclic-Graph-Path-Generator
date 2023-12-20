@@ -1,4 +1,4 @@
-import checkCycleInGraph from "../../src/utils/checkCycleInGraph";
+import { checkCycleInGraph } from "../../src/utils";
 
 describe("Utils", () => {
     describe("check cycles in graph", () => {
@@ -11,7 +11,7 @@ describe("Utils", () => {
                 5: [8],
             };
             const emptyMap = new Map<any, boolean>();
-            const verdict = checkCycleInGraph(data, 1, emptyMap);
+            const verdict = checkCycleInGraph({ graphData: data, node: 1, visitedNodes: emptyMap });
             expect(verdict).toBe(false);
         });
 
@@ -25,14 +25,14 @@ describe("Utils", () => {
                 7: [4],
             };
             const emptyMap = new Map<any, boolean>();
-            const verdict = checkCycleInGraph(data, 1, emptyMap);
+            const verdict = checkCycleInGraph({ graphData: data, node: 1, visitedNodes: emptyMap });
             expect(verdict).toBe(true);
         });
 
         it("given empty graph return value should be false", () => {
             const data = {};
             const emptyMap = new Map<any, boolean>();
-            const verdict = checkCycleInGraph(data, undefined, emptyMap);
+            const verdict = checkCycleInGraph({ graphData: data, node: "", visitedNodes: emptyMap });
             expect(verdict).toBe(false);
         });
     });

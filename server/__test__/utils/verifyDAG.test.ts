@@ -1,4 +1,4 @@
-import verifyDAG from "../../src/utils/verifyDAG";
+import { verifyDAG } from "../../src/utils";
 
 describe("Utils", () => {
     describe("verify DAG", () => {
@@ -10,19 +10,19 @@ describe("Utils", () => {
                 4: [7, 8],
                 5: [8],
             };
-            const verdict = verifyDAG(data, 1);
+            const verdict = verifyDAG({ graphData: data, root: 1 });
             expect(verdict).toBe(true);
         });
 
-        it("given wrong DAG return value should be false", () => {
-            const data = { test: "test" };
-            const verdict = verifyDAG(data, 1);
+        it("given wrong DAG with self loop return value should be false", () => {
+            const data = { 1: [1] };
+            const verdict = verifyDAG({ graphData: data, root: 1 });
             expect(verdict).toBe(false);
         });
 
         it("given empty DAG return value should be true", () => {
             const data = {};
-            const verdict = verifyDAG(data, undefined);
+            const verdict = verifyDAG({ graphData: data, root: "" });
             expect(verdict).toBe(true);
         });
     });

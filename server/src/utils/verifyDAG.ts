@@ -1,7 +1,14 @@
+import { GraphData, GraphNode } from "../types";
 import checkCycleInGraph from "./checkCycleInGraph";
 
-// returns true if the graph is DAG, false otherwise
-export default function verifyDAG(graphData: any, root: any): boolean {
+interface verifyDAGValues {
+    graphData: GraphData;
+    root: GraphNode;
+}
+/*
+ returns true if the graph is DAG, false otherwise
+*/
+export default function verifyDAG({ graphData, root }: verifyDAGValues): boolean {
     // graphData not present or root is not present in the graphData then return false
     if (!graphData) return false;
     if (Object.keys(graphData).length > 0 && !root) return false;
@@ -13,6 +20,6 @@ export default function verifyDAG(graphData: any, root: any): boolean {
     }
 
     const visitedNodes = new Map<any, boolean>();
-    if (checkCycleInGraph(graphData, root, visitedNodes)) return false;
+    if (checkCycleInGraph({ graphData, node: root, visitedNodes })) return false;
     return true;
 }
