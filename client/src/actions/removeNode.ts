@@ -1,4 +1,4 @@
-import { EdgeType, GraphData, GraphNodeType } from "@/types";
+import { GraphData, GraphNodeType } from "@/types";
 import { Dispatch, SetStateAction } from "react";
 import { toast } from "react-toastify";
 

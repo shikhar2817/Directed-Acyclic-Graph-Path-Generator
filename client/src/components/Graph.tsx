@@ -1,30 +1,29 @@
 import { Xwrapper } from "react-xarrows";
 import { Edge, GraphNode } from ".";
-import { GraphData, GraphNodeType } from "@/types";
-import { getAllEdges, getNodeLevels } from "@/utils";
+import { GraphNodeType } from "@/types";
+import { getAllEdgesFromPath, getNodeLevels } from "@/utils";
 
 interface Props {
-    graphData: GraphData;
     paths: GraphNodeType[][];
 }
 
-export default function Graph({ paths, graphData }: Props) {
+export default function Graph({ paths }: Props) {
     return (
         <Xwrapper>
             {/* nodes */}
             <div className="h-[60vh] grid place-content-around">
                 {Object.values(getNodeLevels({ paths })).map((level: GraphNodeType[], index: number) => (
-                    <div key={`level-${index}`} className="w-screen flex flex-row justify-evenly">
-                        {level.map((level: GraphNodeType, levelIndex) => {
-                            return <GraphNode key={`level-node-${levelIndex}`} id={level} />;
+                    <div key={`graph-level-${index}`} className="w-screen flex flex-row justify-evenly">
+                        {level.map((level: GraphNodeType, levelIndex: number) => {
+                            return <GraphNode key={`node-level-${levelIndex}`} id={level} />;
                         })}
                     </div>
                 ))}
             </div>
 
             {/* edges */}
-            {getAllEdges(graphData).map((edge, index) => {
-                return <Edge key={`edge-${index}`} startId={edge.src} endId={edge.dst} />;
+            {getAllEdgesFromPath({ paths }).map((edge, index) => {
+                return <Edge key={`edge-${edge.src}-${edge.dst}-${index}`} startId={edge.src} endId={edge.dst} />;
             })}
         </Xwrapper>
     );

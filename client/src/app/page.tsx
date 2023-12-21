@@ -6,7 +6,7 @@ import { Button, Graph, Input, Select, Tag } from "@/components";
 import { EdgeType, FormInputType, GraphData, GraphNodeType } from "@/types";
 import { getAllEdges } from "@/utils";
 import { useState } from "react";
-import { addEdge, addNode, removeEdge, removeNode } from "@/actions";
+import { addEdge, addNode, generateAllPaths, removeEdge, removeNode } from "@/actions";
 
 export default function Home() {
     const [paths, setPaths] = useState<GraphNodeType[][]>([]);
@@ -17,28 +17,30 @@ export default function Home() {
         node: "",
         srcNode: "",
         dstNode: "",
-        rootNode: "",
+        rootNode: "Select Root",
     });
 
     const handleAddEdge = () => {
         addEdge({ graphData, edge: { src: formData.srcNode, dst: formData.dstNode }, setGraphData });
-        setFormData({ ...formData, srcNode: "", dstNode: "" });
+        setFormData({ ...formData, srcNode: "", dstNode: "", rootNode: "Select Root" });
         setShowGraph(false);
     };
 
     const handleRemoveEdge = (edge: EdgeType) => {
         removeEdge({ graphData, edge, setGraphData });
         setShowGraph(false);
+        setFormData({ ...formData, rootNode: "Select Root" });
     };
 
     const handleRemoveNode = (node: GraphNodeType) => {
         removeNode({ graphData, node, setGraphData });
         setShowGraph(false);
+        setFormData({ ...formData, rootNode: "Select Root" });
     };
 
     const handleAddNode = () => {
         addNode({ graphData, node: formData.node, setGraphData });
-        setFormData({ ...formData, node: "" });
+        setFormData({ ...formData, node: "", rootNode: "Select Root" });
         setShowGraph(false);
     };
 
@@ -46,8 +48,8 @@ export default function Home() {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleGenerateAllPaths = () => {
-        console.log("Generate paths");
+    const handleGenerateAllPaths = async () => {
+        generateAllPaths({ graphData, root: formData.rootNode, setPaths, setShowGraph });
     };
 
     return (
@@ -86,8 +88,8 @@ export default function Home() {
                 </div>
 
                 <Select
-                    value={formData.rootNode}
                     options={Object.keys(graphData)}
+                    value={formData.rootNode}
                     onChange={handleChange}
                     name="rootNode"
                 />
@@ -97,7 +99,7 @@ export default function Home() {
                 <div>
                     {/* Nodes */}
                     {Object.keys(graphData).map((node: GraphNodeType, index) => {
-                        return <Tag key={index} tagTitle={node} onClick={() => handleRemoveNode(node)} />;
+                        return <Tag key={`tab-node-${index}`} tagTitle={node} onClick={() => handleRemoveNode(node)} />;
                     })}
                 </div>
                 <div>
@@ -108,15 +110,15 @@ export default function Home() {
                                 tagTitle={`${edge.src}-${edge.dst}`}
                                 onClick={() => handleRemoveEdge(edge)}
                                 color="pink"
-                                key={index}
+                                key={`tab-edge-${index}`}
                             />
                         );
                     })}
                 </div>
             </div>
             <hr className="h-px my-8 bg-gray-200 border-0" />
-            {showGraph && <Graph graphData={graphData} paths={paths} />}
-            <ToastContainer />
+            {showGraph && <Graph paths={paths} />}
+            <ToastContainer position="bottom-left" />
         </div>
     );
 }

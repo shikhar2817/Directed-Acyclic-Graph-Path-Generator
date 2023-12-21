@@ -1,4 +1,4 @@
-export type GraphNode = string | number;
+export type GraphNode = string;
 
 export interface GraphData {
     [key: GraphNode]: GraphNode[];

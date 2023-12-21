@@ -21,7 +21,7 @@ export default function checkCycleInGraph({ graphData, node, visitedNodes }: che
     visitedNodes.set(node, true);
 
     // if node is a leaf then return false
-    if (!graphData[node]) {
+    if (!graphData[node] || !graphData[node].length) {
         visitedNodes.delete(node);
         return false;
     }
