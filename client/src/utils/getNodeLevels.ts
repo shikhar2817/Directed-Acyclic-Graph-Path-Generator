@@ -5,7 +5,6 @@ interface Props {
 }
 
 export default function getNodeLevels({ paths }: Props): nodeLevelsObjType {
-    console.log("Paths:", paths);
     let nodeLevelsObj: nodeLevelsObjType = {};
     let nodeLevels: nodeLevelsType = {};
 
@@ -22,15 +21,12 @@ export default function getNodeLevels({ paths }: Props): nodeLevelsObjType {
         }
     }
     for (const node in nodeLevels) {
-        console.log("node", node);
         if (!nodeLevelsObj[nodeLevels[node]]) {
             nodeLevelsObj[nodeLevels[node]] = [node];
         } else {
             nodeLevelsObj[nodeLevels[node]].push(node);
         }
     }
-    console.log("Node Levels", nodeLevels);
-    console.log("Node Levels Obj", nodeLevels);
     return nodeLevelsObj;
 }
 
