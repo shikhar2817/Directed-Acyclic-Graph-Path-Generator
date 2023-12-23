@@ -14,6 +14,18 @@ describe("Utils", () => {
             expect(verdict).toBe(true);
         });
 
+        it("given correct DAG return value should be true", () => {
+            const data = {
+                1: ["2", "3"],
+                2: ["3"],
+                3: ["4"],
+                4: ["5"],
+                6: ["6"],
+            };
+            const verdict = verifyDAG({ graphData: data, root: "1" });
+            expect(verdict).toBe(true);
+        });
+
         it("given wrong DAG with self loop return value should be false", () => {
             const data = { 1: ["1"] };
             const verdict = verifyDAG({ graphData: data, root: "1" });

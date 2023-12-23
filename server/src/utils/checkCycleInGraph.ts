@@ -37,5 +37,6 @@ export default function checkCycleInGraph({ graphData, node, visitedNodes }: che
         verdictForChildrenNodes = checkCycleInGraph({ graphData, node: childNode, visitedNodes });
         if (verdictForChildrenNodes) return true;
     }
+    visitedNodes.delete(node);
     return false;
 }
