@@ -1,4 +1,7 @@
-# Juntrax Assignment
+# Directed Acyclic Graph Path Generator - Juntrax Assignment Advance
+
+## Overview
+The project involves creating a Node.js program that generates all possible paths in a Directed Acyclic Graph (DAG) from a given node. The program is wrapped in an Express API, which accepts a POST request with a graph (in JSON format) and responds with the possible paths. Additionally, a React frontend is created to visualize the graph and interact with the API, allowing users to input a graph and view the generated paths. The code follows OOP principles for scalability and maintainability.
 
 ## Frontend
 
